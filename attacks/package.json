@@ -1,0 +1,14 @@
+{
+  "name": "attack-part",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "normal": "node normalDevice.js",
+    "replay": "node replayAttack.js",
+    "fake": "node fakeDeviceAttack.js",
+    "spam": "node spamAttack.js"
+  },
+  "dependencies": {
+    "ethers": "^6.15.0"
+  }
+}
