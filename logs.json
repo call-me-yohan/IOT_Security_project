@@ -1,0 +1,146 @@
+[
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326292195
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326297205
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326302211
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326307214
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326312221
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326317227
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326322232
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326327239
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326332249
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326337264
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326342273
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326347280
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326352293
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326357305
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326362323
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326367325
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326372333
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326377347
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326382363
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326387377
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326392384
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326397395
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326402408
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326407413
+  }
+]

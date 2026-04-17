@@ -1,0 +1,12 @@
+GET http://localhost:3000/logs
+Content-Type: application/json
+
+{
+  "device": "sensor-1",
+  "data": "temp:25C",
+  "status": "accepted",
+  "timestamp": 1710000000
+}
+
+###
+GET http://localhost:3000/attacks

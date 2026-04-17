@@ -1,0 +1,218 @@
+[
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326582543
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326587550
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326592560
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326597574
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326602579
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326607594
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326612608
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326617620
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326622644
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326627658
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326632661
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326637672
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326642699
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326647713
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326652724
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326657732
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326662743
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326667752
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326672754
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326677766
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326682780
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326687790
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326692803
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326697820
+  },
+  {
+    "device": "test-device",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776326702832
+  },
+  {
+    "device": "sensor-ui",
+    "data": "temp:3",
+    "status": "accepted",
+    "timestamp": 1776328648697
+  },
+  {
+    "device": "sensor-ui",
+    "data": "temp:25",
+    "status": "accepted",
+    "timestamp": 1776328653288
+  },
+  {
+    "device": "sensor-ui",
+    "data": "temp:16",
+    "status": "accepted",
+    "timestamp": 1776328658328
+  },
+  {
+    "device": "sensor-ui",
+    "data": "temp:2",
+    "status": "accepted",
+    "timestamp": 1776328658724
+  },
+  {
+    "device": "sensor-ui",
+    "data": "temp:22",
+    "status": "accepted",
+    "timestamp": 1776328663017
+  },
+  {
+    "device": "sensor-ui",
+    "data": "temp:5",
+    "status": "accepted",
+    "timestamp": 1776328670589
+  },
+  {
+    "device": "sensor-ui",
+    "data": "temp:23",
+    "status": "accepted",
+    "timestamp": 1776328676331
+  },
+  {
+    "device": "sensor-ui",
+    "data": "temp:29",
+    "status": "accepted",
+    "timestamp": 1776328681201
+  },
+  {
+    "device": "sensor-ui",
+    "data": "temp:8",
+    "status": "accepted",
+    "timestamp": 1776328685082
+  },
+  {
+    "device": "sensor-ui",
+    "data": "temp:6",
+    "status": "accepted",
+    "timestamp": 1776328693967
+  },
+  {
+    "device": "sensor-ui",
+    "data": "temp:26",
+    "status": "accepted",
+    "timestamp": 1776328694352
+  }
+]
