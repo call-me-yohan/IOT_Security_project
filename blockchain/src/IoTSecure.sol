@@ -7,7 +7,7 @@ contract IoTSecure {
 
     event DeviceRegistered(address device);
     event MessageAccepted(address device, string payload);
-    event MessageRejected(address device);
+    event MessageRejected(address device, string reason);
 
     function registerDevice(address device) external {
         registered[device] = true;
@@ -19,11 +19,14 @@ contract IoTSecure {
         uint256 nonce
     ) external {
         if (!registered[msg.sender]) {
-            emit MessageRejected(msg.sender);
-            revert("Not registered");
+            emit MessageRejected(msg.sender, "Not registered");
+            return;
         }
 
-        require(nonce == nonces[msg.sender], "Replay attack detected");
+        if (nonce != nonces[msg.sender]) {
+    		emit MessageRejected(msg.sender, "Replay Attack Detected");
+    		return;
+	}
 
         nonces[msg.sender]++;
 
