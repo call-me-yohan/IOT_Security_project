@@ -1,31 +1,44 @@
 const { unregisteredContract, unregisteredWallet } = require("./connect");
 const { getReason, getCurrentNonce, sendAndWait } = require("./helpers");
-const { buildPayload, randomDevice } = require("./devices");
+const { buildStructured, randomDevice } = require("./devices");
+const { logAttack } = require("./apiLogger");
 
 async function main() {
-    const device = process.argv[2];
-    const type = process.argv[3];
-    const value = process.argv[4];
+    const deviceArg = process.argv[2];
+    const typeArg = process.argv[3];
+    const valueArg = process.argv[4];
 
-    const payload = device && type && value
-        ? buildPayload(device, type, value)
+    const data = deviceArg && typeArg && valueArg
+        ? buildStructured(deviceArg, typeArg, valueArg)
         : randomDevice();
 
     const nonce = await getCurrentNonce(unregisteredContract, unregisteredWallet);
 
     console.log("FAKE DEVICE ATTACK");
-    console.log("Payload:", payload);
-    console.log("Nonce:", nonce.toString());
+    console.log("Payload:", data.payload);
 
     try {
-        const txHash = await sendAndWait(unregisteredContract, payload, nonce);
-        console.log("Unexpected: fake device was accepted:", txHash);
+        await sendAndWait(unregisteredContract, data.payload, nonce);
+
+        console.log("Unexpected: accepted");
+
+        await logAttack({
+            device: data.device,
+            type: "fake_device",
+            severity: "critical",
+            timestamp: Date.now()
+        });
+
     } catch (err) {
-        console.log("Fake device rejected:", getReason(err));
+        console.log("Rejected:", getReason(err));
+
+        await logAttack({
+            device: data.device,
+            type: "fake_device",
+            severity: "high",
+            timestamp: Date.now()
+        });
     }
 }
 
-main().catch((err) => {
-    console.error("Fake device script error:", getReason(err));
-    process.exit(1);
-});
+main();

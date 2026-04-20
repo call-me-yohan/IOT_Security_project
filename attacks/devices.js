@@ -1,22 +1,31 @@
 function buildPayload(device, type, value) {
-    return `${device}:${type}:${value}`;
+    return `${type}:${value}`;
+}
+
+function buildStructured(device, type, value) {
+    return {
+        device,
+        type,
+        value,
+        payload: `${type}:${value}`
+    };
 }
 
 function randomDevice() {
     const devices = [
-        { device: "thermometer", type: "temperature", values: ["20C", "25C", "30C"] },
-        { device: "door", type: "status", values: ["open", "closed"] },
-        { device: "motionSensor", type: "motion", values: ["detected", "none"] },
-        { device: "light", type: "status", values: ["on", "off"] }
+        { device: "thermometer", type: "temp", values: ["20C", "25C", "30C"] },
+        { device: "Air-Conditioner", type: "temp", values: ["18C", "22C"] },
+        { device: "humiditySensor", type: "humidity", values: ["50%", "60%"] }
     ];
 
-  const d = devices[Math.floor(Math.random() * devices.length)];
-  const value = d.values[Math.floor(Math.random() * d.values.length)];
+    const d = devices[Math.floor(Math.random() * devices.length)];
+    const value = d.values[Math.floor(Math.random() * d.values.length)];
 
-    return buildPayload(d.device, d.type, value);
+    return buildStructured(d.device, d.type, value);
 }
 
 module.exports = {
     buildPayload,
+    buildStructured,
     randomDevice
 };

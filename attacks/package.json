@@ -9,6 +9,7 @@
     "spam": "node spamAttack.js"
   },
   "dependencies": {
-    "ethers": "^6.15.0"
+    "ethers": "^6.15.0",
+    "axios": "^1.6.0"
   }
 }
