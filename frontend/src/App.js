@@ -25,14 +25,20 @@ export default function Dashboard() {
   const [logs, setLogs] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [devices, setDevices] = useState({
-    thermometer: "temp:--",
-    "Air-Conditioner": "state:--",
-  });
+  thermometer: "temp:--",
+  "Air-Conditioner": "state:--",
+  "motion-sensor": "motion:IDLE",
+  camera: "mode:OFF",
+  "alarm-system": "state:DISARMED",
+});
 
   const [selectedDevice, setSelectedDevice] = useState("thermometer");
   const [temperatureValue, setTemperatureValue] = useState("25");
   const [acState, setAcState] = useState("ON");
   const [sendStatus, setSendStatus] = useState("");
+const [motionState, setMotionState] = useState("IDLE");
+const [cameraMode, setCameraMode] = useState("OFF");
+const [alarmState, setAlarmState] = useState("DISARMED");
 
 const fetchData = async () => {
   const [logsResult, attacksResult, devicesResult] = await Promise.allSettled([
@@ -79,9 +85,12 @@ const fetchData = async () => {
     const devicesData = devicesResult.value;
 
     setDevices({
-      thermometer: devicesData?.thermometer || "temp:--",
-      "Air-Conditioner": devicesData?.["Air-Conditioner"] || "state:--",
-    });
+  thermometer: devicesData.thermometer || "temp:--",
+  "Air-Conditioner": devicesData["Air-Conditioner"] || "state:--",
+  "motion-sensor": devicesData["motion-sensor"] || "motion:IDLE",
+  camera: devicesData.camera || "mode:OFF",
+  "alarm-system": devicesData["alarm-system"] || "state:DISARMED",
+});
   } else {
     console.error("Devices fetch failed:", devicesResult.reason);
   }
@@ -101,6 +110,18 @@ const fetchData = async () => {
     if (selectedDevice === "Air-Conditioner") {
       return `state:${acState}`;
     }
+
+if (selectedDevice === "motion-sensor") {
+  return `motion:${motionState}`;
+}
+
+if (selectedDevice === "camera") {
+  return `mode:${cameraMode}`;
+}
+
+if (selectedDevice === "alarm-system") {
+  return `state:${alarmState}`;
+}
 
     return "";
   };
@@ -149,7 +170,23 @@ const fetchData = async () => {
             ❄️ Air-Conditioner
             <span>{devices["Air-Conditioner"]}</span>
           </div>
-        </div>
+
+	<div className="card">
+  🚶 Motion Sensor
+  <span>{devices["motion-sensor"]}</span>
+</div>
+
+<div className="card">
+  📷 Camera
+  <span>{devices.camera}</span>
+</div>
+
+<div className="card">
+  🚨 Alarm System
+  <span>{devices["alarm-system"]}</span>
+</div>
+
+</div>
 
         <div className="panel">
           <h3>Send Device Message</h3>
@@ -161,8 +198,11 @@ const fetchData = async () => {
                 value={selectedDevice}
                 onChange={(e) => setSelectedDevice(e.target.value)}
               >
-                <option value="thermometer">thermometer</option>
-                <option value="Air-Conditioner">Air-Conditioner</option>
+		<option value="thermometer">thermometer</option>
+<option value="Air-Conditioner">Air-Conditioner</option>
+<option value="motion-sensor">motion-sensor</option>
+<option value="camera">camera</option>
+<option value="alarm-system">alarm-system</option>
               </select>
             </label>
 
@@ -188,6 +228,38 @@ const fetchData = async () => {
                 </select>
               </label>
             )}
+
+		{selectedDevice === "motion-sensor" && (
+  <label>
+    Motion
+    <select value={motionState} onChange={(e) => setMotionState(e.target.value)}>
+      <option value="IDLE">IDLE</option>
+      <option value="DETECTED">DETECTED</option>
+    </select>
+  </label>
+)}
+
+{selectedDevice === "camera" && (
+  <label>
+    Camera Mode
+    <select value={cameraMode} onChange={(e) => setCameraMode(e.target.value)}>
+      <option value="OFF">OFF</option>
+      <option value="ON">ON</option>
+      <option value="RECORDING">RECORDING</option>
+    </select>
+  </label>
+)}
+
+{selectedDevice === "alarm-system" && (
+  <label>
+    Alarm State
+    <select value={alarmState} onChange={(e) => setAlarmState(e.target.value)}>
+      <option value="DISARMED">DISARMED</option>
+      <option value="ARMED">ARMED</option>
+      <option value="TRIGGERED">TRIGGERED</option>
+    </select>
+  </label>
+)}
 
             <button type="submit">Send Message</button>
           </form>

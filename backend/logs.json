@@ -18,5 +18,213 @@
     "source": "automation",
     "reason": "Triggered by thermometer reading temp:30C",
     "timestamp": 1776759049255
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "state:OFF",
+    "status": "accepted",
+    "timestamp": 1776786976872
+  },
+  {
+    "device": "thermometer",
+    "data": "temp:23C",
+    "status": "accepted",
+    "timestamp": 1776786984926
+  },
+  {
+    "device": "thermometer",
+    "data": "temp:28C",
+    "status": "accepted",
+    "timestamp": 1776787001008
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "state:ON",
+    "status": "accepted",
+    "source": "automation",
+    "reason": "Triggered by thermometer reading temp:28C",
+    "timestamp": 1776787001009
+  },
+  {
+    "device": "thermometer",
+    "data": "temp:25C",
+    "status": "accepted",
+    "timestamp": 1776787474671
+  },
+  {
+    "device": "thermometer",
+    "data": "temp:30C",
+    "status": "accepted",
+    "timestamp": 1776788041117
+  },
+  {
+    "device": "thermometer",
+    "data": "temp:20C",
+    "status": "accepted",
+    "timestamp": 1776788053184
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "state:OFF",
+    "status": "accepted",
+    "source": "automation",
+    "reason": "Triggered by thermometer reading temp:20C",
+    "timestamp": 1776788053184
+  },
+  {
+    "device": "thermometer",
+    "data": "temp:40C",
+    "status": "accepted",
+    "timestamp": 1776788065250
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "state:ON",
+    "status": "accepted",
+    "source": "automation",
+    "reason": "Triggered by thermometer reading temp:40C",
+    "timestamp": 1776788065251
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "temp:22C",
+    "status": "accepted",
+    "timestamp": 1776788282050
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "temp:25C",
+    "status": "accepted",
+    "timestamp": 1776788350308
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "temp:18C",
+    "status": "accepted",
+    "timestamp": 1776788350309
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "temp:22C",
+    "status": "accepted",
+    "timestamp": 1776788350318
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "humidity:50%",
+    "status": "accepted",
+    "timestamp": 1776788354350
+  },
+  {
+    "device": "motion-sensor",
+    "data": "motion:DETECTED",
+    "status": "accepted",
+    "timestamp": 1776794590167
+  },
+  {
+    "device": "alarm-system",
+    "data": "state:ARMED",
+    "status": "accepted",
+    "timestamp": 1776794602232
+  },
+  {
+    "device": "motion-sensor",
+    "data": "motion:DETECTED",
+    "status": "accepted",
+    "timestamp": 1776794618312
+  },
+  {
+    "device": "camera",
+    "data": "mode:RECORDING",
+    "status": "accepted",
+    "source": "automation",
+    "reason": "Triggered by motion while alarm was armed",
+    "timestamp": 1776794618312
+  },
+  {
+    "device": "alarm-system",
+    "data": "state:TRIGGERED",
+    "status": "accepted",
+    "source": "automation",
+    "reason": "Triggered by motion while alarm was armed",
+    "timestamp": 1776794618347
+  },
+  {
+    "device": "motion-sensor",
+    "data": "state:DISARMED",
+    "status": "accepted",
+    "timestamp": 1776794698611
+  },
+  {
+    "device": "motion-sensor",
+    "data": "motion:IDLE",
+    "status": "accepted",
+    "timestamp": 1776794790953
+  },
+  {
+    "device": "motion-sensor",
+    "data": "temp:20C",
+    "status": "accepted",
+    "timestamp": 1776794811045
+  },
+  {
+    "device": "alarm-system",
+    "data": "state:ARMED",
+    "status": "accepted",
+    "timestamp": 1776795096849
+  },
+  {
+    "device": "motion-sensor",
+    "data": "motion:DETECTED",
+    "status": "accepted",
+    "timestamp": 1776795108916
+  },
+  {
+    "device": "camera",
+    "data": "mode:RECORDING",
+    "status": "accepted",
+    "source": "automation",
+    "reason": "Triggered by motion while alarm was armed",
+    "timestamp": 1776795108916
+  },
+  {
+    "device": "alarm-system",
+    "data": "state:TRIGGERED",
+    "status": "accepted",
+    "source": "automation",
+    "reason": "Triggered by motion while alarm was armed",
+    "timestamp": 1776795108951
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "state:ARMED",
+    "status": "accepted",
+    "timestamp": 1776795153125
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "temp:35C",
+    "status": "accepted",
+    "timestamp": 1776795153127
+  },
+  {
+    "device": "thermometer",
+    "data": "temp:28C",
+    "status": "accepted",
+    "timestamp": 1776795281578
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "state:ON",
+    "status": "accepted",
+    "source": "automation",
+    "reason": "Triggered by temp:28C",
+    "timestamp": 1776795281578
+  },
+  {
+    "device": "Air-Conditioner",
+    "data": "state:OFF",
+    "status": "accepted",
+    "timestamp": 1776795321743
   }
 ]

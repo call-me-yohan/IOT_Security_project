@@ -8,5 +8,5 @@ module.exports = {
 
   // This account MUST NOT be registered in the contract
   UNREGISTERED_KEY:
-    "0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a"
+    "0x2a871d0798f97d79848a013d4936a73bf4cc922c825d33c1cf7073dff6d409c6"
 };

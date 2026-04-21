@@ -118,6 +118,7 @@ const config = {
         "indexed": false,
         "internalType": "address"
       }
+,{ "name": "reason", "type": "string", "indexed": false, "internalType": "string" }
     ],
     "anonymous": false
   }

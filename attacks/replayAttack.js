@@ -1,32 +1,40 @@
 const { registeredContract, registeredWallet } = require("./connect");
-const { getReason, getCurrentNonce, sendAndWait } = require("./helpers");
+const { getReason, getCurrentNonce, sendAndInspect } = require("./helpers");
 const { buildStructured, randomDevice } = require("./devices");
 const { logAttack } = require("./apiLogger");
 
 async function main() {
-    const data = randomDevice();
+  const deviceArg = process.argv[2];
+  const typeArg = process.argv[3];
+  const valueArg = process.argv[4];
 
-    const nonce = await getCurrentNonce(registeredContract, registeredWallet);
+  const data =
+    deviceArg && typeArg && valueArg
+      ? buildStructured(deviceArg, typeArg, valueArg)
+      : randomDevice();
 
-    console.log("REPLAY ATTACK");
+  const nonce = await getCurrentNonce(registeredContract, registeredWallet);
 
-    await sendAndWait(registeredContract, data.payload, nonce);
+  console.log("REPLAY ATTACK");
+  console.log("Payload:", data.payload);
+  console.log("Nonce:", nonce.toString());
 
-    try {
-        await registeredContract.sendMessage(data.payload, nonce);
+  const first = await sendAndInspect(registeredContract, data.payload, nonce);
+  console.log("First outcome:", first);
 
-        console.log("Replay accepted");
+  const replay = await sendAndInspect(registeredContract, data.payload, nonce);
+  console.log("Replay outcome:", replay);
 
-    } catch (err) {
-        console.log("Replay rejected:", getReason(err));
-
-        await logAttack({
-            device: data.device,
-            type: "replay_attack",
-            severity: "high",
-            timestamp: Date.now()
-        });
-    }
+  await logAttack({
+    device: data.device,
+    type: "replay_attack",
+    severity: replay.status === "rejected" ? "high" : "critical",
+    error: replay.reason || null,
+    payload: data.payload,
+    timestamp: Date.now()
+  });
 }
 
-main();
+main().catch((err) => {
+  console.error("Fatal:", getReason(err));
+});
