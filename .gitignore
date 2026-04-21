@@ -12,3 +12,12 @@ docs/
 
 # Dotenv file
 .env
+
+
+node_modules/
+*.log
+logs.json
+attacks.json
+build/
+dist/
+coverage/
