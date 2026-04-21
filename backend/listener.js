@@ -14,6 +14,7 @@ const deviceKeys = {
     "Air-Conditioner": "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
 };
 
+
 // build address -> device name map
 const addressToDevice = {};
 for (const [deviceName, privateKey] of Object.entries(deviceKeys)) {
@@ -21,8 +22,15 @@ for (const [deviceName, privateKey] of Object.entries(deviceKeys)) {
     addressToDevice[wallet.address.toLowerCase()] = deviceName;
 }
 
-let logs = readLogs();
-let attacks = readAttacks();
+let logs = readLogs() || [];
+let attacks = readAttacks() || [];
+let listening = false;
+
+// live simulated device states
+let deviceStates = {
+    thermometer: "temp:--",
+    "Air-Conditioner": "state:OFF"
+};
 
 const provider = new ethers.JsonRpcProvider(config.rpcUrl);
 
@@ -49,24 +57,92 @@ function storeAttack(attack) {
     saveAttacks(attacks);
 }
 
+function extractTemperature(payload) {
+    if (typeof payload !== "string") return null;
+
+    const match = payload.match(/^temp:(\d{1,3})C$/);
+    if (!match) return null;
+
+    return parseInt(match[1], 10);
+}
+
+function applyAutomationRules(log) {
+    // update current device state from accepted message
+    if (log.device === "thermometer") {
+        deviceStates.thermometer = log.data;
+
+        const temp = extractTemperature(log.data);
+        if (temp === null) return;
+
+        if (temp >= 28 && deviceStates["Air-Conditioner"] !== "state:ON") {
+            deviceStates["Air-Conditioner"] = "state:ON";
+
+            const autoLog = {
+                device: "Air-Conditioner",
+                data: "state:ON",
+                status: "accepted",
+                source: "automation",
+                reason: `Triggered by thermometer reading ${log.data}`,
+                timestamp: Date.now()
+            };
+
+            storeLog(autoLog);
+            console.log("🤖 Automation:", autoLog);
+        }
+
+        if (temp <= 24 && deviceStates["Air-Conditioner"] !== "state:OFF") {
+            deviceStates["Air-Conditioner"] = "state:OFF";
+
+            const autoLog = {
+                device: "Air-Conditioner",
+                data: "state:OFF",
+                status: "accepted",
+                source: "automation",
+                reason: `Triggered by thermometer reading ${log.data}`,
+                timestamp: Date.now()
+            };
+
+            storeLog(autoLog);
+            console.log("🤖 Automation:", autoLog);
+        }
+    }
+
+    if (log.device === "Air-Conditioner") {
+        deviceStates["Air-Conditioner"] = log.data;
+    }
+}
+
 function startListening() {
+    if (listening) {
+        console.log("⚠️ Listener already started");
+        return;
+    }
+
+    listening = true;
     console.log("🎧 Listening to blockchain events...");
+
+    contract.removeAllListeners("MessageAccepted");
+    contract.removeAllListeners("MessageRejected");
 
     contract.on("MessageAccepted", (device, payload) => {
         const log = {
-            device: resolveDeviceName(device), // store name, not address
+            device: resolveDeviceName(device),
             data: payload,
             status: "accepted",
             timestamp: Date.now()
         };
 
         storeLog(log);
+        applyAutomationRules(log);
+
         console.log("✅ Accepted:", log);
     });
 
-    contract.on("MessageRejected", (device) => {
+    contract.on("MessageRejected", (device, reason) => {
         const attack = {
-            device: resolveDeviceName(device), // store name, not address
+            device: resolveDeviceName(device),
+            type: "contract_rejection",
+            error: reason || "Rejected by smart contract",
             status: "rejected",
             timestamp: Date.now()
         };
@@ -80,6 +156,7 @@ module.exports = {
     startListening,
     getLogs: () => logs,
     getAttacks: () => attacks,
+    getDeviceStates: () => deviceStates,
     storeLog,
     storeAttack
 };

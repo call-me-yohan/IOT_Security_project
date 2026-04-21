@@ -8,6 +8,7 @@ const {
     startListening,
     getLogs,
     getAttacks,
+    getDeviceStates,
     storeLog,
     storeAttack
 } = require("./listener");
@@ -37,8 +38,75 @@ const contract = new ethers.Contract(
     provider
 );
 
+function classifyAttackError(err) {
+    const msg = (err?.reason || err?.shortMessage || err?.message || "").toLowerCase();
+
+    if (msg.includes("insufficient funds")) {
+        return {
+            type: "invalid_sender",
+            error: "Sender wallet has no funds or is unauthorized"
+        };
+    }
+
+    if (msg.includes("nonce")) {
+        return {
+            type: "replay_attack",
+            error: "Invalid or reused nonce"
+        };
+    }
+
+    if (msg.includes("device not registered")) {
+        return {
+            type: "unauthorized_device",
+            error: "Device not registered"
+        };
+    }
+
+    if (msg.includes("payload format not allowed")) {
+        return {
+            type: "invalid_payload",
+            error: "Payload format not allowed"
+        };
+    }
+
+    if (msg.includes("revert")) {
+        return {
+            type: "contract_rejection",
+            error: err.reason || "Transaction rejected by smart contract"
+        };
+    }
+
+    return {
+        type: "unknown_attack",
+        error: err.reason || err.shortMessage || "Unknown blockchain error"
+    };
+}
+
 // start system
 startListening();
+
+function isValidPayload(payload) {
+    if (typeof payload !== "string") return false;
+
+    return (
+        /^temp:(\d|[1-4]\d|50)C$/.test(payload) ||
+        /^state:(ON|OFF)$/.test(payload)
+    );
+}
+
+function isValidPayloadForDevice(device, payload) {
+    if (typeof payload !== "string") return false;
+
+    if (device === "thermometer") {
+        return /^temp:(\d|[1-4]\d|50)C$/.test(payload);
+    }
+
+    if (device === "Air-Conditioner") {
+        return /^state:(ON|OFF)$/.test(payload);
+    }
+
+    return false;
+}
 
 // helper to replace address with device name
 function resolveDeviceName(device) {
@@ -94,10 +162,34 @@ app.post("/attacks", (req, res) => {
     res.json({ message: "Attack stored", attack });
 });
 
+app.get("/devices", (req, res) => {
+    res.json(getDeviceStates());
+});
+
 app.post("/send", async (req, res) => {
     const { privateKey, payload } = req.body;
 
     let wallet;
+
+    if (!isValidPayload(payload)) {
+    let senderAddress = "unknown";
+
+    try {
+        const tempWallet = new ethers.Wallet(privateKey);
+        senderAddress = tempWallet.address;
+    } catch (_) {}
+
+    const attack = {
+        type: "invalid_payload",
+        device: resolveDeviceName(senderAddress),
+        payload,
+        error: "Payload format not allowed",
+        timestamp: Date.now()
+    };
+
+    storeAttack(attack);
+    return res.status(400).json({ error: "Payload format not allowed" });
+}
 
     try {
         wallet = new ethers.Wallet(privateKey, provider);
@@ -111,11 +203,79 @@ app.post("/send", async (req, res) => {
         res.json({ success: true, txHash: tx.hash });
 
     } catch (err) {
-        const senderAddress = wallet ? wallet.address : "invalid-wallet";
+    let senderAddress = "unknown";
 
+    try {
+        if (privateKey) {
+            const tempWallet = new ethers.Wallet(privateKey);
+            senderAddress = tempWallet.address;
+        }
+    } catch (_) {}
+
+    const classified = classifyAttackError(err);
+
+    const attack = {
+        type: classified.type,
+        device: resolveDeviceName(senderAddress),
+        payload,
+        error: classified.error,
+        timestamp: Date.now()
+    };
+
+    storeAttack(attack);
+    res.status(500).json({ error: classified.error });
+}
+});
+
+app.post("/send-by-device", async (req, res) => {
+    const { device, payload } = req.body;
+
+    if (!deviceKeys[device]) {
         const attack = {
-            type: "offchain_error",
-            device: senderAddress,
+            type: "invalid_device",
+            device,
+            payload,
+            error: "Unsupported device",
+            timestamp: Date.now()
+        };
+
+        storeAttack(attack);
+        return res.status(400).json({ error: "Unsupported device" });
+    }
+
+    if (!isValidPayloadForDevice(device, payload)) {
+        const attack = {
+            type: "invalid_payload",
+            device,
+            payload,
+            error: `Invalid payload for ${device}`,
+            timestamp: Date.now()
+        };
+
+        storeAttack(attack);
+        return res.status(400).json({ error: `Invalid payload for ${device}` });
+    }
+
+    try {
+        const privateKey = deviceKeys[device];
+        const wallet = new ethers.Wallet(privateKey, provider);
+        const contractWithSigner = contract.connect(wallet);
+
+        const nonce = await contract.nonces(wallet.address);
+
+        const tx = await contractWithSigner.sendMessage(payload, nonce);
+        await tx.wait();
+
+        res.json({
+            success: true,
+            txHash: tx.hash,
+            device,
+            payload
+        });
+    } catch (err) {
+        const attack = {
+            type: "send_error",
+            device,
             payload,
             error: err.reason || err.shortMessage || err.message,
             timestamp: Date.now()
