@@ -1,33 +1,37 @@
+
 const { ethers } = require("ethers");
 const abi = require("./abi.json");
 const {
   RPC_URL,
   CONTRACT_ADDRESS,
-  REGISTERED_KEY,
+  DEVICE_KEYS,
   UNREGISTERED_KEY
 } = require("./config");
 
 const provider = new ethers.JsonRpcProvider(RPC_URL);
 
-const registeredWallet = new ethers.Wallet(REGISTERED_KEY, provider);
-const unregisteredWallet = new ethers.Wallet(UNREGISTERED_KEY, provider);
+function getRegisteredContext(deviceName) {
+  const privateKey = DEVICE_KEYS[deviceName];
 
-const registeredContract = new ethers.Contract(
-  CONTRACT_ADDRESS,
-  abi,
-  registeredWallet
-);
+  if (!privateKey) {
+    throw new Error(`Unknown registered device: ${deviceName}`);
+  }
 
-const unregisteredContract = new ethers.Contract(
-  CONTRACT_ADDRESS,
-  abi,
-  unregisteredWallet
-);
+  const wallet = new ethers.Wallet(privateKey, provider);
+  const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, wallet);
+
+  return { wallet, contract };
+}
+
+function getUnregisteredContext() {
+  const wallet = new ethers.Wallet(UNREGISTERED_KEY, provider);
+  const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, wallet);
+
+  return { wallet, contract };
+}
 
 module.exports = {
   provider,
-  registeredWallet,
-  unregisteredWallet,
-  registeredContract,
-  unregisteredContract
+  getRegisteredContext,
+  getUnregisteredContext
 };

@@ -1,19 +1,26 @@
-const { registeredContract, registeredWallet } = require("./connect");
+const { getRegisteredContext } = require("./connect");
 const { getReason, getCurrentNonce, sendAndInspect } = require("./helpers");
-const { randomDevice } = require("./devices");
+const { buildStructured } = require("./devices");
 const { logAttack } = require("./apiLogger");
 
 async function main() {
   const rounds = Number(process.argv[2] || 5);
+  const deviceArg = process.argv[3] || "thermometer";
+  const typeArg = process.argv[4] || "temp";
+  const valueArg = process.argv[5] || "30C";
+
+  const data = buildStructured(deviceArg, typeArg, valueArg);
+  const { contract, wallet } = getRegisteredContext(data.device);
 
   console.log("SPAM ATTACK");
+  console.log("Device:", data.device);
+  console.log("Payload:", data.payload);
 
   for (let i = 0; i < rounds; i++) {
-    const data = randomDevice();
-    const nonce = await getCurrentNonce(registeredContract, registeredWallet);
-
     try {
-      const outcome = await sendAndInspect(registeredContract, data.payload, nonce);
+      const nonce = await getCurrentNonce(contract, wallet);
+      const outcome = await sendAndInspect(contract, data.payload, nonce);
+
       console.log(`[${i + 1}/${rounds}]`, outcome.status, data.payload);
 
       await logAttack({

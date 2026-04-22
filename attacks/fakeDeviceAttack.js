@@ -1,25 +1,24 @@
-const { unregisteredContract, unregisteredWallet } = require("./connect");
+const { getUnregisteredContext } = require("./connect");
 const { getReason, getCurrentNonce, sendAndInspect } = require("./helpers");
-const { buildStructured, randomDevice } = require("./devices");
+const { buildStructured } = require("./devices");
 const { logAttack } = require("./apiLogger");
 
 async function main() {
-  const deviceArg = process.argv[2];
-  const typeArg = process.argv[3];
-  const valueArg = process.argv[4];
+  const deviceArg = process.argv[2] || "motion-sensor";
+  const typeArg = process.argv[3] || "motion";
+  const valueArg = process.argv[4] || "DETECTED";
 
-  const data =
-    deviceArg && typeArg && valueArg
-      ? buildStructured(deviceArg, typeArg, valueArg)
-      : randomDevice();
+  const data = buildStructured(deviceArg, typeArg, valueArg);
+  const { contract, wallet } = getUnregisteredContext();
 
-  const nonce = await getCurrentNonce(unregisteredContract, unregisteredWallet);
+  const nonce = await getCurrentNonce(contract, wallet);
 
   console.log("FAKE DEVICE ATTACK");
+  console.log("Claimed device:", data.device);
   console.log("Payload:", data.payload);
 
   try {
-    const outcome = await sendAndInspect(unregisteredContract, data.payload, nonce);
+    const outcome = await sendAndInspect(contract, data.payload, nonce);
     console.log("Outcome:", outcome);
 
     await logAttack({
@@ -33,14 +32,7 @@ async function main() {
   } catch (err) {
     console.log("Error:", getReason(err));
 
-    await logAttack({
-      device: data.device,
-      type: "fake_device",
-      severity: "critical",
-      error: getReason(err),
-      payload: data.payload,
-      timestamp: Date.now()
-    });
+    console.log("Outcome:", outcome);
   }
 }
 

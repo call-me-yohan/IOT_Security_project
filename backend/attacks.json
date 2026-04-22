@@ -1,142 +1,106 @@
 [
   {
-    "device": "humiditySensor",
-    "type": "fake_device",
-    "severity": "critical",
-    "timestamp": 1776787805262
-  },
-  {
-    "device": "humiditySensor",
-    "type": "fake_device",
-    "severity": "critical",
-    "timestamp": 1776788015806
-  },
-  {
-    "device": "Air-Conditioner",
-    "type": "replay_attack",
-    "severity": "high",
-    "timestamp": 1776788278989
-  },
-  {
     "device": "thermometer",
-    "type": "DDoS",
-    "severity": "high",
-    "timestamp": 1776788349531
-  },
-  {
-    "device": "Air-Conditioner",
-    "type": "DDoS",
-    "severity": "high",
-    "timestamp": 1776788349827
-  },
-  {
-    "device": "Air-Conditioner",
-    "type": "DDoS",
-    "severity": "high",
-    "timestamp": 1776788350103
-  },
-  {
-    "device": "humiditySensor",
-    "type": "DDoS",
-    "severity": "high",
-    "timestamp": 1776788350363
-  },
-  {
-    "device": "humiditySensor",
-    "type": "fake_device",
-    "severity": "critical",
-    "timestamp": 1776789227086
-  },
-  {
-    "device": "motion-sensor",
-    "type": "contract_rejection",
-    "error": "Not registered",
-    "status": "rejected",
-    "timestamp": 1776792030671
-  },
-  {
-    "device": "motion-sensor",
-    "type": "contract_rejection",
-    "error": "Not registered",
-    "status": "rejected",
-    "timestamp": 1776792038723
-  },
-  {
-    "device": "motion-sensor",
-    "type": "contract_rejection",
-    "error": "Not registered",
-    "status": "rejected",
-    "timestamp": 1776792086908
-  },
-  {
-    "device": "alarm-system",
-    "type": "fake_device",
-    "severity": "critical",
-    "error": null,
-    "payload": "state:DISARMED",
-    "timestamp": 1776794696574
-  },
-  {
-    "device": "thermometer",
-    "type": "fake_device",
-    "severity": "critical",
-    "error": null,
-    "payload": "temp:20C",
-    "timestamp": 1776794807196
-  },
-  {
-    "device": "thermometer",
-    "type": "fake_device",
-    "severity": "high",
-    "error": "Not registered",
-    "payload": "temp:25C",
-    "timestamp": 1776795128559
-  },
-  {
-    "device": "0xa0Ee7A142d267C1f36714E4a8F75612F20a79720",
-    "type": "contract_rejection",
-    "error": "Not registered",
-    "status": "rejected",
-    "timestamp": 1776795129011
-  },
-  {
-    "device": "alarm-system",
     "type": "spam_attack",
     "severity": "medium",
     "error": null,
-    "payload": "state:ARMED",
-    "timestamp": 1776795151449
+    "payload": "temp:30C",
+    "timestamp": 1776881468374
   },
   {
     "device": "thermometer",
     "type": "spam_attack",
     "severity": "high",
     "error": "nonce has already been used",
-    "payload": "temp:20C",
-    "timestamp": 1776795151561
+    "payload": "temp:30C",
+    "timestamp": 1776881468478
   },
   {
-    "device": "motion-sensor",
+    "device": "thermometer",
     "type": "spam_attack",
     "severity": "high",
     "error": "nonce has already been used",
+    "payload": "temp:30C",
+    "timestamp": 1776881468550
+  },
+  {
+    "device": "thermometer",
+    "type": "spam_attack",
+    "severity": "medium",
+    "error": null,
+    "payload": "temp:30C",
+    "timestamp": 1776881468662
+  },
+  {
+    "device": "thermometer",
+    "type": "spam_attack",
+    "severity": "high",
+    "error": "nonce has already been used",
+    "payload": "temp:30C",
+    "timestamp": 1776881468742
+  },
+  {
+    "device": "motion-sensor",
+    "type": "fake_device",
+    "severity": "high",
+    "error": "Not registered",
     "payload": "motion:DETECTED",
-    "timestamp": 1776795151653
+    "timestamp": 1776882223683
   },
   {
     "device": "thermometer",
     "type": "spam_attack",
     "severity": "medium",
     "error": null,
-    "payload": "temp:35C",
-    "timestamp": 1776795151777
+    "payload": "temp:30C",
+    "timestamp": 1776882369919
   },
   {
-    "device": "alarm-system",
+    "device": "thermometer",
     "type": "spam_attack",
     "severity": "high",
     "error": "nonce has already been used",
-    "payload": "state:DISARMED",
-    "timestamp": 1776795151864
+    "payload": "temp:30C",
+    "timestamp": 1776882370027
+  },
+  {
+    "device": "thermometer",
+    "type": "spam_attack",
+    "severity": "high",
+    "error": "nonce has already been used",
+    "payload": "temp:30C",
+    "timestamp": 1776882370101
+  },
+  {
+    "device": "thermometer",
+    "type": "spam_attack",
+    "severity": "medium",
+    "error": null,
+    "payload": "temp:30C",
+    "timestamp": 1776882370226
+  },
+  {
+    "device": "thermometer",
+    "type": "spam_attack",
+    "severity": "high",
+    "error": "nonce has already been used",
+    "payload": "temp:30C",
+    "timestamp": 1776882370314
+  },
+  {
+    "device": "unknown",
+    "type": "replay_attack",
+    "severity": "critical",
+    "error": "nonce has already been used",
+    "payload": null,
+    "timestamp": 1776883496087
+  },
+  {
+    "device": "Replay device",
+    "type": "replay_attack",
+    "severity": "critical",
+    "error": "nonce has already been used",
+    "payload": null,
+    "timestamp": 1776883568716
   }
 ]

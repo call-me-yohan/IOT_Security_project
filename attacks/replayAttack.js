@@ -1,6 +1,6 @@
-const { registeredContract, registeredWallet } = require("./connect");
+const { getRegisteredContext } = require("./connect");
 const { getReason, getCurrentNonce, sendAndInspect } = require("./helpers");
-const { buildStructured, randomDevice } = require("./devices");
+const { buildStructured } = require("./devices");
 const { logAttack } = require("./apiLogger");
 
 async function main() {
@@ -11,30 +11,47 @@ async function main() {
   const data =
     deviceArg && typeArg && valueArg
       ? buildStructured(deviceArg, typeArg, valueArg)
-      : randomDevice();
+      : buildStructured("thermometer", "temp", "30C");
 
-  const nonce = await getCurrentNonce(registeredContract, registeredWallet);
+  const { contract, wallet } = getRegisteredContext(data.device);
+  const nonce = await getCurrentNonce(contract, wallet);
 
   console.log("REPLAY ATTACK");
+  console.log("Device:", data.device);
   console.log("Payload:", data.payload);
   console.log("Nonce:", nonce.toString());
 
-  const first = await sendAndInspect(registeredContract, data.payload, nonce);
+  const first = await sendAndInspect(contract, data.payload, nonce);
   console.log("First outcome:", first);
 
-  const replay = await sendAndInspect(registeredContract, data.payload, nonce);
+  const replay = await sendAndInspect(contract, data.payload, nonce);
   console.log("Replay outcome:", replay);
 
   await logAttack({
     device: data.device,
     type: "replay_attack",
-    severity: replay.status === "rejected" ? "high" : "critical",
+    severity: "high",
     error: replay.reason || null,
     payload: data.payload,
     timestamp: Date.now()
   });
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("Fatal:", getReason(err));
+
+  try {
+    await logAttack({
+      device: "Replay device",
+      type: "replay_attack",
+      severity: "critical",
+      error: getReason(err),
+      payload: null,
+      timestamp: Date.now()
+    });
+  } catch (logErr) {
+    console.error("Failed to save replay attack:", getReason(logErr));
+  }
+
+  process.exit(1);
 });
